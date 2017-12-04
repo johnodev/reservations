@@ -10,10 +10,16 @@ import com.johnpoulakos.reservations.data.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class ReservationService {
+
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
     private RoomRepository roomRepository;
     private GuestRepository guestRepository;
     private ReservationRepository reservationRepository;
@@ -26,7 +32,10 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<RoomReservation> getRoomReservationsForDate(Date date) {
+    public List<RoomReservation> getRoomReservationsForDate(String dateString) {
+
+        Date date = this.createDateFromDateString(dateString);
+
         Iterable<Room> rooms = this.roomRepository.findAll();
         Map<Long, RoomReservation> roomReservationMap = new HashMap<>();
 
@@ -62,5 +71,25 @@ public class ReservationService {
         }
 
         return roomReservations;
+    }
+
+    private Date createDateFromDateString( String dateString) {
+
+        Date date = null;
+
+        if(dateString != null){
+
+            try{
+                date = DATE_FORMAT.parse(dateString);
+            }catch(ParseException pe){
+                date = new Date();
+            }
+
+        } else {
+
+            date = new Date();
+        }
+
+        return date;
     }
 }

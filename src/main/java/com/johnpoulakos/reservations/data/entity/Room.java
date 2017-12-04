@@ -12,7 +12,7 @@ public class Room {
     @Column(name="NAME")
     private String name;
     @Column(name="ROOM_NUMBER")
-    private String suite;
+    private String number;
     @Column(name="BED_INFO")
     private String bedInfo;
 
@@ -32,12 +32,12 @@ public class Room {
         this.name = name;
     }
 
-    public String getSuite() {
-        return suite;
+    public String getNumber() {
+        return number;
     }
 
-    public void setSuite(String suite) {
-        this.suite = suite;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getBedInfo() {
